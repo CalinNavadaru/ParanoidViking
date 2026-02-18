@@ -1,0 +1,12 @@
+Django>=4.2
+djangorestframework~=3.16.0
+torch>=2.0
+pytorch-lightning>=2.0
+torchmetrics~=1.7.3
+numpy
+nltk~=3.9.1
+bs4~=0.0.2
+requests~=2.32.4
+gunicorn>=20.1
+django-environ~=0.12.0
+beautifulsoup4~=4.13.4

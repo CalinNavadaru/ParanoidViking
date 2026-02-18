@@ -1,0 +1,10 @@
+pandas
+nltk
+visual_graph
+bs4
+joblib
+numpy
+torch
+scikit-learn
+torchmetrics
+pytorch-lightning

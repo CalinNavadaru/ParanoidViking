@@ -1,0 +1,49 @@
+services:
+  smtp:
+    image: mlan/postfix:latest
+    container_name: smtp_local
+    hostname: mail.local
+    environment:
+      MAIL_DOMAIN: mail.local
+      MAIL_BOXES: alice@mail.local bob@mail.local
+      MYDESTINATION: localhost
+      MYNETWORKS: 0.0.0.0/0
+      MESSAGE_SIZE_LIMIT: 10240000
+      DEFAULT_TRANSPORT: error:discard-for-tests
+      MILTER_DEFAULT_ACTION: accept
+      FORCE_CONFIG: OVERWRITE
+      SMTPD_MILTERS: inet:guard:10025
+    ports:
+      - "2525:25"
+    volumes:
+      - postfix-state:/srv
+
+    networks:
+      - phish-net
+
+  guard:
+    build: ./guard
+    container_name: guard
+    env_file:
+      - .env
+    expose:
+      - "${MILTER_PORT}"
+    environment:
+      BACKEND_URL: "${BACKEND_URL}"
+      VERIFY_SSL: "${VERIFY_SSL}"
+      MILTER_PORT: "${MILTER_PORT}"
+      TIMEOUT: "${TIMEOUT}"
+      LOG_LEVEL: "${LOG_LEVEL}"
+      PYTHONUNBUFFERED: "1"
+    restart: unless-stopped
+    volumes:
+      - ./logs:/var/log/milter:rw
+
+    networks:
+      - phish-net
+volumes:
+  postfix-state:
+
+networks:
+  phish-net:
+    external: true
