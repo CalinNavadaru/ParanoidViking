@@ -193,9 +193,11 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 /dataset/emails/cc.en.300.bin
-/embedding_matrix.npy
-/vocab.json
+*/embedding_matrix.npy
+*/vocab.json
 /char_vocab.json
 /lightning_logs/
 /pictures/
 /dataset/
+/url_data/
+/email_data/
